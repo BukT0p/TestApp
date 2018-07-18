@@ -7,6 +7,9 @@ import com.squareup.picasso.Picasso
 import com.vyakunin.testapp.BuildConfig
 import com.vyakunin.testapp.api.IMovieApi
 import com.vyakunin.testapp.api.MovieApiWrapper
+import com.vyakunin.testapp.data.MyObjectBox
+import com.vyakunin.testapp.repo.MovieRepo
+import io.objectbox.BoxStore
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -35,4 +38,9 @@ val appModule: Module = applicationContext {
 
     //Provides single picasso instance
     bean { Picasso.Builder(get()).defaultBitmapConfig(Bitmap.Config.RGB_565).build() }
+}
+
+val repoModule: Module = applicationContext {
+    bean { MyObjectBox.builder().androidContext(get()).build() as BoxStore }
+    factory { MovieRepo(get()) }
 }

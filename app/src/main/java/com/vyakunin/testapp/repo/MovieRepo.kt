@@ -48,4 +48,6 @@ class MovieRepo(private val store: BoxStore) {
         val query = moviesBox.query().isNull(MovieEntity_.description).build()
         return query.findIds().map { it.toInt() }.toIntArray()
     }
+
+    fun getAll() = moviesBox.all
 }

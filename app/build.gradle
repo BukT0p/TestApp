@@ -26,6 +26,9 @@ android {
     sourceSets {
         main.java.srcDirs += 'build/generated/source/objectbox'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
