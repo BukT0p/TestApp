@@ -83,6 +83,10 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
         toast("Booking is not implemented")
     }
 
+    override fun showNetworkError() {
+        toast(R.string.network_unavailable)
+    }
+
     private fun buildRichString(duration: String?, director: String?, actors: String?, genres: String?): CharSequence? {
         val ssb = SpannableStringBuilder()
         addBoldTitleAndInfo("Duration", duration, ssb)

@@ -11,8 +11,8 @@ import io.reactivex.rxkotlin.subscribeBy
 @InjectViewState
 class MainPresenter(
         private val interactor: IMainInteractor,
-                    private val uiScheduler: Scheduler,
-                    private val bgScheduler: Scheduler) : MvpRxPresenter<MainView>() {
+        private val uiScheduler: Scheduler,
+        private val bgScheduler: Scheduler) : MvpRxPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -20,7 +20,11 @@ class MainPresenter(
                 .subscribeOn(bgScheduler)
                 .observeOn(uiScheduler)
                 .subscribeBy {
-                    viewState.showData(it)
+                    if (it.isEmpty()) {
+                        viewState.showDataNotAvailableMessage(interactor.isConnected())
+                    } else {
+                        viewState.showData(it)
+                    }
                 }.addTo(subscriptions)
     }
 

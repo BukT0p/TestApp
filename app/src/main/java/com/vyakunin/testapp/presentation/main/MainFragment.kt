@@ -1,11 +1,13 @@
 package com.vyakunin.testapp.presentation.main
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.*
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -32,6 +34,7 @@ class MainFragment : MvpAppCompatFragment(), MainView {
         presenter.onItemClicked(it)
     }
 
+    private lateinit var emptyView: TextView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             container?.inflate(R.layout.fragment_main)
 
@@ -42,6 +45,7 @@ class MainFragment : MvpAppCompatFragment(), MainView {
             itemAnimator = DefaultItemAnimator()
             adapter = mainAdapter
         }
+        emptyView = view.findViewById(R.id.empty)
         activity?.title = "Top 10 Movies"
     }
 
@@ -51,5 +55,11 @@ class MainFragment : MvpAppCompatFragment(), MainView {
 
     override fun showData(items: List<MovieEntity>) {
         mainAdapter.data = items
+        if (emptyView.visibility == View.VISIBLE) emptyView.visibility = View.GONE
+    }
+
+    override fun showDataNotAvailableMessage(connected: Boolean) {
+        emptyView.visibility = View.VISIBLE
+        emptyView.setText(if (connected) R.string.network_slow else R.string.network_unavailable)
     }
 }

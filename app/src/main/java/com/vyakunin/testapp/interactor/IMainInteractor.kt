@@ -5,4 +5,5 @@ import io.reactivex.Observable
 
 interface IMainInteractor {
     fun moviesObservable(): Observable<List<MovieEntity>>
+    fun isConnected(): Boolean
 }

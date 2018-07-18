@@ -53,10 +53,10 @@ val presentationModule: Module = applicationContext {
     bean("bg") { Schedulers.io() }
     bean("ui") { AndroidSchedulers.mainThread() }
 
-    factory { MainInteractor(get()) as IMainInteractor }
+    factory { MainInteractor(get(), get()) as IMainInteractor }
     factory { MainPresenter(interactor = get(), uiScheduler = get("ui"), bgScheduler = get("bg")) }
 
-    factory { DetailsInteractor(get()) as IDetailsInteractor }
+    factory { DetailsInteractor(get(), get()) as IDetailsInteractor }
     factory { params ->
         val movieId: Long = params[DetailsFragment.ARG_ID] ?: 0
         DetailsPresenter(movieId = movieId, interactor = get(), uiScheduler = get("ui"), bgScheduler = get("bg"))

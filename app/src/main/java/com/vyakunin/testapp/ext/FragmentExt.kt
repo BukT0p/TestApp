@@ -9,9 +9,9 @@ fun <T : Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
 }
 
 fun Fragment.toast(resId: Int) {
-    Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, resId, Toast.LENGTH_LONG).show()
 }
 
 fun Fragment.toast(msg: String) {
-    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 }

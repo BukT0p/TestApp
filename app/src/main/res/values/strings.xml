@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">TestApp</string>
     <string name="book_tickets">Book tickets</string>
+    <string name="network_slow">Network is shaky, hold on!</string>
+    <string name="network_unavailable">Network connection problem, check your data settings</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.vyakunin.testapp.presentation.details
 
 import com.arellomobile.mvp.InjectViewState
-import com.google.gson.Gson
 import com.vyakunin.testapp.interactor.IDetailsInteractor
 import com.vyakunin.testapp.presentation.common.MvpRxPresenter
 import io.reactivex.Scheduler
@@ -37,6 +36,14 @@ class DetailsPresenter(private val interactor: IDetailsInteractor,
     }
 
     private fun downloadDetails() {
+        interactor.downloadMovieDetailsCompletable(movieId)
+                .subscribeOn(bgScheduler)
+                .observeOn(uiScheduler)
+                .subscribeBy({
+                    viewState.showNetworkError()
+                }, {
+                    //Nothing - wait for DB to update UI
+                }).addTo(subscriptions)
 
     }
 }

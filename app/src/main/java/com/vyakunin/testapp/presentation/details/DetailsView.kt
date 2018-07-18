@@ -17,4 +17,7 @@ interface DetailsView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showDetails(description: String? = null, duration: String? = null, director: String? = null, actors: String? = null, genres: String? = null)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showNetworkError()
 }

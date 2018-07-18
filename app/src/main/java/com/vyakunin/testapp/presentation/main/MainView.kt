@@ -13,4 +13,6 @@ interface MainView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showData(items: List<MovieEntity>)
 
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDataNotAvailableMessage(connected: Boolean)
 }
