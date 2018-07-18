@@ -23,7 +23,6 @@ import org.koin.android.ext.android.get
 
 class DetailsFragment : MvpAppCompatFragment(), DetailsView {
     companion object {
-        const val TAG = "DetailsFragment"
         const val ARG_ID = "id"
     }
 
@@ -47,7 +46,6 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         posterView = view.findViewById(R.id.poster_image)
         titleView = view.findViewById(R.id.title)
         infoView = view.findViewById(R.id.additional_info)
@@ -56,9 +54,9 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
     }
 
     override fun showHeader(rank: Int, posterUrl: String?, name: String) {
-        activity?.title = "Ranked #$rank"
         titleView.text = name
         if (posterUrl != null) Picasso.get().load(posterUrl).into(posterView) else posterView.visibility = View.GONE
+        //TODO show rank
     }
 
     override fun showDetails(description: String?, duration: String?, director: String?, actors: String?, genres: String?) {
@@ -69,7 +67,6 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
         infoView.text = buildRichString(duration, director, actors, genres)
     }
 
-
     override fun showProgress(show: Boolean) {
         if (show) {
             statusMessage = Snackbar.make(view!!, "Details Fetching in Progress", Snackbar.LENGTH_INDEFINITE)
@@ -79,13 +76,9 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
         }
     }
 
-    override fun navigateToTicketsBooking() {
-        toast("Booking is not implemented")
-    }
+    override fun navigateToTicketsBooking() = toast("Booking is not implemented")
 
-    override fun showNetworkError() {
-        toast(R.string.network_unavailable)
-    }
+    override fun showNetworkError() = toast(R.string.network_unavailable)
 
     private fun buildRichString(duration: String?, director: String?, actors: String?, genres: String?): CharSequence? {
         val ssb = SpannableStringBuilder()

@@ -1,4 +1,4 @@
-package com.vyakunin.testapp.presentation.main
+package com.vyakunin.testapp.presentation.detailed
 
 import com.arellomobile.mvp.InjectViewState
 import com.vyakunin.testapp.interactor.IMainInteractor
@@ -8,27 +8,24 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 
 @InjectViewState
-class MainPresenter(
-        private val interactor: IMainInteractor,
+class DetailedPresenter(
+        var selectedPos: Int,
+        val interactor: IMainInteractor,
         private val uiScheduler: Scheduler,
-        private val bgScheduler: Scheduler) : MvpRxPresenter<MainView>() {
+        private val bgScheduler: Scheduler) : MvpRxPresenter<DetailedView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         interactor.moviesObservable()
                 .subscribeOn(bgScheduler)
+                .map { it.map { it.id } }
                 .observeOn(uiScheduler)
                 .subscribeBy {
-                    if (it.isEmpty()) {
-                        viewState.showDataNotAvailableMessage(interactor.isConnected())
-                    } else {
-                        viewState.showData(it)
-                    }
+                    viewState.showMovieIds(it, selectedPos)
                 }.addTo(subscriptions)
     }
 
-    fun onItemClicked(pos: Int) {
-
-        viewState.navigateToMovieDetails(pos)
+    fun onPageSelected(position: Int) {
+        selectedPos = position
     }
 }

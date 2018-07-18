@@ -8,7 +8,7 @@ import com.vyakunin.testapp.data.MovieEntity
 
 interface MainView : MvpView {
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun navigateToMovieDetails(id: Long)
+    fun navigateToMovieDetails(pos: Int)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showData(items: List<MovieEntity>)

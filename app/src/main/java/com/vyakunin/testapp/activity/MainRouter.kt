@@ -1,7 +1,7 @@
 package com.vyakunin.testapp.activity
 
 interface MainRouter {
-    fun navigateToDetails(id: Long)
+    fun navigateToDetails(pos: Int)
 
     fun navigateToMain()
 }

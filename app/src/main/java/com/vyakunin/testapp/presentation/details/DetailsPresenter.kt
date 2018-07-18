@@ -44,6 +44,5 @@ class DetailsPresenter(private val interactor: IDetailsInteractor,
                 }, {
                     //Nothing - wait for DB to update UI
                 }).addTo(subscriptions)
-
     }
 }

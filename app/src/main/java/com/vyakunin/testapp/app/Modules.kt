@@ -10,6 +10,8 @@ import com.vyakunin.testapp.interactor.DetailsInteractor
 import com.vyakunin.testapp.interactor.IDetailsInteractor
 import com.vyakunin.testapp.interactor.IMainInteractor
 import com.vyakunin.testapp.interactor.MainInteractor
+import com.vyakunin.testapp.presentation.detailed.DetailedFragment
+import com.vyakunin.testapp.presentation.detailed.DetailedPresenter
 import com.vyakunin.testapp.presentation.details.DetailsFragment
 import com.vyakunin.testapp.presentation.details.DetailsPresenter
 import com.vyakunin.testapp.presentation.main.MainPresenter
@@ -62,4 +64,8 @@ val presentationModule: Module = applicationContext {
         DetailsPresenter(movieId = movieId, interactor = get(), uiScheduler = get("ui"), bgScheduler = get("bg"))
     }
 
+    factory { params ->
+        val pos: Int = params[DetailedFragment.ARG_SELECTED_POSITION] ?: 0
+        DetailedPresenter(selectedPos = pos, interactor = get(), uiScheduler = get("ui"), bgScheduler = get("bg"))
+    }
 }

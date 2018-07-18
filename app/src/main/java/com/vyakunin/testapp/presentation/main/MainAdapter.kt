@@ -13,7 +13,7 @@ import com.vyakunin.testapp.presentation.common.AbsViewHolder
 import com.vyakunin.testapp.presentation.common.AutoUpdatableAdapter
 import kotlin.properties.Delegates
 
-class MainAdapter(private val clickListener: (MovieEntity) -> Unit) :
+class MainAdapter(private val clickListener: (Int) -> Unit) :
         RecyclerView.Adapter<AbsViewHolder<MovieEntity>>(), AutoUpdatableAdapter {
 
     var data: List<MovieEntity> by Delegates.observable(arrayListOf()) { _, old, new ->
@@ -25,7 +25,7 @@ class MainAdapter(private val clickListener: (MovieEntity) -> Unit) :
     override fun getItemCount(): Int = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbsViewHolder<MovieEntity> =
-            ViewHolder(parent.inflate(R.layout.view_main_movie_item)) { clickListener(data[it]) }
+            ViewHolder(parent.inflate(R.layout.view_main_movie_item)) { clickListener(it) }
 
     override fun onBindViewHolder(holder: AbsViewHolder<MovieEntity>, position: Int) =
             holder.onBind(data[position])
