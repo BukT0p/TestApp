@@ -1,0 +1,55 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.2.50'
+    ext.objectboxVersion = '1.5.0'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "http://objectbox.net/beta-repo/" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// Define versions in a single place
+ext {
+    //google
+    supportLibraryVersion = '27.1.1'
+    playLibraryVersion = '11.8.0'
+    constraintLayoutVersion = '1.1.2'
+    //rxjava
+    rxKotlinVersion = "2.2.0"
+    rxAndroidVersion = "2.0.2"
+    //square
+    okHttpVersion = '3.10.0'
+    picassoVersion = '2.71828'
+    retrofitVersion = '2.4.0'
+    gsonVersion = '2.8.2'
+    //moxy
+    moxyVersion = '1.5.5'
+    //unit tests
+    junitVersion = '4.12'
+    mockitoVersion = '2.10.0'
+    hamcrestVersion = '2.0.0.0'
+    runnerVersion = '1.0.1'
+    rulesVersion = '1.0.1'
+    espressoVersion = '3.0.2'
+}

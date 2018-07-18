@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.objectbox'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.vyakunin.testapp"
+        minSdkVersion 21
+        targetSdkVersion 27 //28 still in preview
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "AuthToken", "\"3b502b3f-b1ff-4128-bd99-626e74836d9c\""
+        }
+        debug {
+            buildConfigField "String", "AuthToken", "\"3b502b3f-b1ff-4128-bd99-626e74836d9c\""
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'build/generated/source/objectbox'
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.kotlin_version"
+    //Support library
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
+    //RxJava2
+    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.ext.rxKotlinVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
+    // Picasso (image lib)
+    implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
+    // Retrofit (networking)
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okHttpVersion"
+    // Moxy (MVP)
+    implementation "com.arello-mobile:moxy-app-compat:$rootProject.ext.moxyVersion"
+    //ObjectBox
+    implementation "io.objectbox:objectbox-kotlin:$objectboxVersion"
+    testImplementation "io.objectbox:objectbox-macos:$objectboxVersion"
+    implementation "io.objectbox:objectbox-rxjava:0.9.8"
+    // Koin for Android
+    implementation 'org.koin:koin-android:0.9.3'
+    //Junit
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    // Kotlin Test Support
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$rootProject.ext.kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$rootProject.ext.kotlin_version"
+    // Mockito-Kotlin
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+}
+//Resolves dependency versions across test and production APKs, specifically, transitive dependencies. This is required since Espresso internally has a dependency on support-annotations.
+configurations.all {
+    resolutionStrategy {
+        force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+        force "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
+        force "com.android.support:exifinterface:$rootProject.ext.supportLibraryVersion"
+    }
+}
+
+//kapt dependencies
+dependencies {
+    kapt "com.arello-mobile:moxy-compiler:$rootProject.ext.moxyVersion"
+    kapt "io.objectbox:objectbox-processor:$objectboxVersion"
+}
