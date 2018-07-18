@@ -15,12 +15,14 @@ class SyncTopTenMoviesCommand : BaseCommand() {
     override val jobId: Int = TestJobService.JOB_ID_TOP_TEN
 
     override fun runForResult(): Boolean {
+        Log.e("!!!", "SyncTopTenMoviesCommand started")
         val call = api.moviesByRank(1, 10)
         try {
             val response = call.execute()
             val dtoList = response.body()
             if (response.isSuccessful && dtoList != null) {
                 val repo = appContext.get<MovieRepo>()
+                repo.deleteAll()
                 repo.insertUpdateRank(dtoList)
                 if (repo.getEmptyMovieIds().isNotEmpty()) {
                     SyncMovieDetailsCommand().schedule()

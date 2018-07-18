@@ -14,6 +14,7 @@ class SyncMovieDetailsCommand : BaseCommand() {
     override val jobId: Int = TestJobService.JOB_ID_DETAILS
 
     override fun runForResult(): Boolean {
+        Log.e("!!!", "SyncMovieDetailsCommand started")
         val repo = appContext.get<MovieRepo>()
         val emptyMovieIds = repo.getEmptyMovieIds()
         if (emptyMovieIds.isEmpty()) return true
@@ -22,7 +23,7 @@ class SyncMovieDetailsCommand : BaseCommand() {
             val response = call.execute()
             val dtoList = response.body()
             if (response.isSuccessful && dtoList != null) {
-
+                repo.updateDetails(dtoList)
             }
             return true
         } catch (e: IOException) {

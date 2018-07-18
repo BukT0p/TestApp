@@ -35,7 +35,7 @@ class TestJobService : JobService() {
             val builder = JobInfo.Builder(jobId, ComponentName(context, TestJobService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setMinimumLatency(delay)//ASAP
-                    .setOverrideDeadline(delay + 3000L)
+                    .setOverrideDeadline(delay + 1000L)
             if (extras != null) builder.setExtras(extras)
             val jobInfo = builder.build()
 
@@ -70,12 +70,7 @@ class TestJobService : JobService() {
                     val jobParams = it.first
                     val result = it.second
                     jobFinished(jobParams, !result)
-                }).addTo(subscriptions)
+                })
         return true
-    }
-
-    override fun onDestroy() {
-        subscriptions.clear()
-        super.onDestroy()
     }
 }

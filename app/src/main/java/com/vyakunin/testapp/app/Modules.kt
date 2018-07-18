@@ -1,16 +1,18 @@
 package com.vyakunin.testapp.app
 
-import android.graphics.Bitmap
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.squareup.picasso.Picasso
 import com.vyakunin.testapp.BuildConfig
 import com.vyakunin.testapp.api.IMovieApi
 import com.vyakunin.testapp.api.MovieApiWrapper
 import com.vyakunin.testapp.data.MyObjectBox
+import com.vyakunin.testapp.interactor.IMainInteractor
+import com.vyakunin.testapp.interactor.MainInteractor
+import com.vyakunin.testapp.presentation.main.MainPresenter
 import com.vyakunin.testapp.repo.MovieRepo
 import io.objectbox.BoxStore
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
 import retrofit2.Retrofit
@@ -35,12 +37,14 @@ val appModule: Module = applicationContext {
                 .create(IMovieApi::class.java)
         MovieApiWrapper(api = api, authToken = BuildConfig.AuthToken)
     }
-
-    //Provides single picasso instance
-    bean { Picasso.Builder(get()).defaultBitmapConfig(Bitmap.Config.RGB_565).build() }
 }
 
 val repoModule: Module = applicationContext {
-    bean { MyObjectBox.builder().androidContext(get()).build() as BoxStore }
-    factory { MovieRepo(get()) }
+    bean("boxStore") { MyObjectBox.builder().androidContext(this.androidApplication().applicationContext).build() }
+    factory { MovieRepo(get("boxStore")) }
+}
+
+val presentationModule: Module = applicationContext {
+    factory { MainInteractor(get()) as IMainInteractor }
+    factory { MainPresenter(get()) }
 }

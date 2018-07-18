@@ -8,6 +8,8 @@ import com.vyakunin.testapp.data.toRankedEntity
 import com.vyakunin.testapp.data.updateDetails
 import io.objectbox.Box
 import io.objectbox.BoxStore
+import io.objectbox.rx.RxQuery
+import io.reactivex.Observable
 
 class MovieRepo(private val store: BoxStore) {
     private val moviesBox: Box<MovieEntity> by lazy { store.boxFor(MovieEntity::class.java) }
@@ -50,4 +52,8 @@ class MovieRepo(private val store: BoxStore) {
     }
 
     fun getAll() = moviesBox.all
+
+    fun moviesByRankObservable(): Observable<List<MovieEntity>> =
+            RxQuery.observable(moviesBox.query().order(MovieEntity_.rank).build())
+
 }
