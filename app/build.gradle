@@ -52,9 +52,10 @@ dependencies {
     testImplementation "io.objectbox:objectbox-macos:$objectboxVersion"
     implementation "io.objectbox:objectbox-rxjava:0.9.8"
     // Koin for Android
-    implementation 'org.koin:koin-android:0.9.3'
+    implementation "org.koin:koin-android:$rootProject.ext.koinVersion"
     //Junit
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.koin:koin-test:$rootProject.ext.koinVersion" //testcompile 'org.koin:koin-test:{{ site.current_version }}'
     // Kotlin Test Support
     testImplementation "org.jetbrains.kotlin:kotlin-test:$rootProject.ext.kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$rootProject.ext.kotlin_version"
