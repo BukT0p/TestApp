@@ -12,6 +12,7 @@ import io.objectbox.rx.RxQuery
 import io.reactivex.Observable
 
 class MovieRepo(private val store: BoxStore) {
+
     private val moviesBox: Box<MovieEntity> by lazy { store.boxFor(MovieEntity::class.java) }
 
     fun deleteAll() = moviesBox.removeAll()
@@ -56,4 +57,6 @@ class MovieRepo(private val store: BoxStore) {
     fun moviesByRankObservable(): Observable<List<MovieEntity>> =
             RxQuery.observable(moviesBox.query().order(MovieEntity_.rank).build())
 
+    fun movieObservableById(movieId: Long): Observable<MovieEntity> =
+            RxQuery.observable(moviesBox.query().equal(MovieEntity_.id, movieId).build()).map { it.first() }
 }

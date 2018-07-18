@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:318675289481283424",
-      "lastPropertyId": "11:7901321925377439838",
+      "lastPropertyId": "9:3113620947564836968",
       "name": "MovieEntity",
       "properties": [
         {
@@ -33,16 +33,16 @@
           "name": "director"
         },
         {
+          "id": "7:2457226769751048578",
+          "name": "actorsJsonArray"
+        },
+        {
+          "id": "8:2456108404823477500",
+          "name": "genresJsonArray"
+        },
+        {
           "id": "9:3113620947564836968",
           "name": "posterUrl"
-        },
-        {
-          "id": "10:3442833337271070094",
-          "name": "actorsList"
-        },
-        {
-          "id": "11:7901321925377439838",
-          "name": "genresList"
         }
       ],
       "relations": []
@@ -56,10 +56,7 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    2457226769751048578,
-    2456108404823477500
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }

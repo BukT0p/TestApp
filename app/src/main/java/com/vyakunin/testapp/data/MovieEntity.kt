@@ -11,6 +11,6 @@ data class MovieEntity(
         var duration: String? = null,
         var description: String? = null,
         var director: String? = null,
-        var actorsJsonArray: String? = null, //serialized json array of actors
-        var genresJsonArray: String? = null, //serialized json array of genres
+        var actorsList: String? = null, //list of actors separated with ", "
+        var genresList: String? = null, //list of genres separated with ", "
         var posterUrl: String? = null)
